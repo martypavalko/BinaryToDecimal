@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 
+# TODO: Add comments to annotate functionality,
+#       Add better argument detection (Example shell usage: bin2dec -d 45 or bin2dec -b 1001)
+#       Add help text for descriptors on shell usage
+
 import sys
 
 def bin_to_dec(n):
