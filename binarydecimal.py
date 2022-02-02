@@ -1,27 +1,24 @@
-#!/usr/bin/python3
+# Take input as 1's and 0's only
+# Iterate through each digit starting from the right-most digit
+# Multiply that indexed digit by 2 to the power of the index
+# Add all of the products of multipication together for the conversion
 
-# TODO: Add comments to annotate functionality,
-#       Add better argument detection (Example shell usage: bin2dec -d 45 or bin2dec -b 1001)
-#       Add help text for descriptors on shell usage
+def bin2dec():
 
-import sys
+    binary_number = input("Please enter a binary number:\n")
+    
+    if not ("1" or "0") in binary_number:
+        print("ERROR: Please enter a binary number!")        
+    else:   
+        conversion = 0
+        i = 0
 
-def bin_to_dec(n):
-    return int(n, 2)
+        while i < len(binary_number):
+            conversion += int(binary_number[len(binary_number)-i-1]) * 2 ** i
+            # print(len(binary_number)-i-1)
+            i += 1
 
-def dec_to_bin(n):
-    return bin(n).replace('0b', '')
+        print(conversion)
+    return conversion
 
-if sys.argv[1] == '-d' or sys.argv[1] == '--decimal':
-    decimal_number = int(input('Input a decimal number: '))
-    print(dec_to_bin(decimal_number))
-
-elif sys.argv[1] == '-b' or sys.argv[1] == '--binary':
-    binary_number = input("Input a binary number: ")
-    print(bin_to_dec(binary_number))
-
-elif sys.argv[1] == '' or sys.argv[1] == 0:
-    print('ERROR: Please specify shell parameter')
-
-else:
-    print('ERROR: Invalid parameter')
+bin2dec()
