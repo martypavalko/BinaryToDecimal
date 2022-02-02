@@ -2,10 +2,7 @@
 
 import sys, argparse
 
-# TODO: Clean up code to make it more readable
-# TODO: Add comments to walk through functions and understand each component
 # TODO: Add functionality for binary to hex and hex to binary conversions
-# TODO: Add the ability to pass values straight from the terminal
 # TODO: Add input validation
 
 hex_list = {
@@ -92,6 +89,33 @@ def dec2hex(decimal_number):
 
     print(conversion)
 
+def bin2hex(binary_number):
+    
+    while (True): # Begin input validation
+
+        if not ("1" or "0") in binary_number:
+            print("ERROR: Please enter a binary number!")        
+        else:   
+            to_hex_conversion = 0
+            i = 0
+
+            while i < len(binary_number): # Iterate through each char of the inputted number
+                to_hex_conversion += int(binary_number[len(binary_number)-i-1]) * 2 ** i # And multiply by 2 to the power of i
+                i += 1
+
+            conversion = ""
+            
+            while to_hex_conversion != 0:
+                conversion = hex_list[str(to_hex_conversion % 16)] + conversion # Add to conversion: the remainder of the decimal number divided by 16
+                to_hex_conversion = int(to_hex_conversion/16) # Set the decimal number equal to itself divided by 16
+
+        print(conversion)
+        break
+        
+
+def hex2bin(hex_number):
+    print("Hexadecimal to binary")
+
 bin2dec_parser = argparse.ArgumentParser(description="Convert numbers to and from decimal, binary, or hexadecimal")
 
 bin2dec_parser.add_argument("Conversion", metavar="conversion_type", type=str, help="Select conversion type")
@@ -102,7 +126,7 @@ args = bin2dec_parser.parse_args()
 conversion_type = args.Conversion
 number = args.Number
 
-if any(i in conversion_type for i in ("b2d", "d2b", "h2d", "d2h")):
+if any(i in conversion_type for i in ("b2d", "d2b", "h2d", "d2h", "b2h")):
     if conversion_type == "b2d":
         bin2dec(number)
     if conversion_type == "d2b":
@@ -111,6 +135,8 @@ if any(i in conversion_type for i in ("b2d", "d2b", "h2d", "d2h")):
         hex2dec(number)
     if conversion_type == "d2h":
         dec2hex(number)
+    if conversion_type == "b2h":
+        bin2hex(number)
 else:
     print("ERROR: Invalid conversion type")
     sys.exit()
