@@ -2,7 +2,6 @@
 
 import sys, argparse
 
-# TODO: Add functionality for binary to hex and hex to binary conversions
 # TODO: Add input validation
 
 hex_list = {
