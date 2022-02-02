@@ -91,7 +91,7 @@ def dec2hex(decimal_number):
 
 def bin2hex(binary_number):
     
-    while (True): # Begin input validation
+    while (True):
 
         if not ("1" or "0") in binary_number:
             print("ERROR: Please enter a binary number!")        
@@ -99,23 +99,44 @@ def bin2hex(binary_number):
             to_hex_conversion = 0
             i = 0
 
-            while i < len(binary_number): # Iterate through each char of the inputted number
-                to_hex_conversion += int(binary_number[len(binary_number)-i-1]) * 2 ** i # And multiply by 2 to the power of i
+            while i < len(binary_number):
+                to_hex_conversion += int(binary_number[len(binary_number)-i-1]) * 2 ** i
                 i += 1
 
             conversion = ""
             
             while to_hex_conversion != 0:
-                conversion = hex_list[str(to_hex_conversion % 16)] + conversion # Add to conversion: the remainder of the decimal number divided by 16
-                to_hex_conversion = int(to_hex_conversion/16) # Set the decimal number equal to itself divided by 16
+                conversion = hex_list[str(to_hex_conversion % 16)] + conversion
+                to_hex_conversion = int(to_hex_conversion/16)
 
         print(conversion)
         break
         
 
 def hex2bin(hex_number):
-    print("Hexadecimal to binary")
+    conversion = 0
+    i = 0
 
+    while i < len(hex_number):
+        hex_string_indexed = len(hex_number)-i-1
+
+        if any(j in hex_number[hex_string_indexed] for j in ("A", "B", "C", "D", "E", "F")):
+            conversion += int(hex_key_list[hex_value_list.index(hex_number[len(hex_number)-i-1])]) * 16 ** i
+        else:
+            conversion += int(hex_number[len(hex_number)-i-1]) * 16 ** i
+
+        i += 1
+
+    to_bin_conversion = ""
+
+    while conversion != 0:
+        to_bin_conversion = str(conversion % 2) + to_bin_conversion
+        conversion = int(conversion / 2)
+
+    print(to_bin_conversion)
+    
+
+        
 bin2dec_parser = argparse.ArgumentParser(description="Convert numbers to and from decimal, binary, or hexadecimal")
 
 bin2dec_parser.add_argument("Conversion", metavar="conversion_type", type=str, help="Select conversion type")
@@ -126,7 +147,7 @@ args = bin2dec_parser.parse_args()
 conversion_type = args.Conversion
 number = args.Number
 
-if any(i in conversion_type for i in ("b2d", "d2b", "h2d", "d2h", "b2h")):
+if any(i in conversion_type for i in ("b2d", "d2b", "h2d", "d2h", "b2h", "h2b")):
     if conversion_type == "b2d":
         bin2dec(number)
     if conversion_type == "d2b":
@@ -137,6 +158,8 @@ if any(i in conversion_type for i in ("b2d", "d2b", "h2d", "d2h", "b2h")):
         dec2hex(number)
     if conversion_type == "b2h":
         bin2hex(number)
+    if conversion_type == "h2b":
+        hex2bin(number)
 else:
     print("ERROR: Invalid conversion type")
     sys.exit()
