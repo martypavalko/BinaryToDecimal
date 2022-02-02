@@ -1,6 +1,11 @@
 #! /usr/bin/python3
 
-hex_values = {
+# TODO: Clean up code to make it more readable
+# TODO: Add comments to walk through functions and understand each component
+# TODO: Add functionality for binary to hex and hex to binary conversions
+# TODO: Add the ability to pass values straight from the terminal
+
+hex_list = {
     "1" : "1",
     "2" : "2",
     "3" : "3",
@@ -19,24 +24,8 @@ hex_values = {
     "0" : "0"
 }
 
-reverse_hex_values = {
-    "1" : "1",
-    "2" : "2",
-    "3" : "3",
-    "4" : "4",
-    "5" : "5",
-    "6" : "6",
-    "7" : "7",
-    "8" : "8",
-    "9" : "9",
-    "A": "10",
-    "B" : "11",
-    "C" : "12",
-    "D" : "13",
-    "E" : "14",
-    "F" : "15",
-    "0" : "0"
-}
+hex_key_list = list(hex_list.keys())
+hex_value_list = list(hex_list.values())
 
 def bin2dec():
 
@@ -81,7 +70,7 @@ def hex2dec():
         hex_string_indexed = len(hex_number)-i-1
 
         if any(j in hex_number[hex_string_indexed] for j in ("A", "B", "C", "D", "E", "F")):
-            conversion += int(reverse_hex_values[hex_number[len(hex_number)-i-1]]) * 16 ** i
+            conversion += int(hex_key_list[hex_value_list.index(hex_number[len(hex_number)-i-1])]) * 16 ** i
             # print("Letter detected", hex_number[len(hex_number)-i-1])
         else:
             # print("Number detected", hex_number[len(hex_number)-i-1])
@@ -101,7 +90,7 @@ def dec2hex():
 
     while decimal_number != 0:
 
-        conversion = hex_values[str(decimal_number % 16)] + conversion
+        conversion = hex_list[str(decimal_number % 16)] + conversion
         decimal_number = int(decimal_number/16)
 
     print(conversion)
