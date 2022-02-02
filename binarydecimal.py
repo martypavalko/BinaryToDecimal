@@ -4,6 +4,7 @@
 # TODO: Add comments to walk through functions and understand each component
 # TODO: Add functionality for binary to hex and hex to binary conversions
 # TODO: Add the ability to pass values straight from the terminal
+# TODO: Add input validation
 
 hex_list = {
     "1" : "1",
@@ -24,12 +25,15 @@ hex_list = {
     "0" : "0"
 }
 
+# Form separate lists of keys and values from the hex_list dictionary for cleaner lookup
 hex_key_list = list(hex_list.keys())
 hex_value_list = list(hex_list.values())
 
+# Binary to Decimal conversion
 def bin2dec():
 
-    while (True):
+    while (True): # Begin input validation
+
         binary_number = input("Please enter a binary number:\n")
         
         if not ("1" or "0") in binary_number:
@@ -38,14 +42,15 @@ def bin2dec():
             conversion = 0
             i = 0
 
-            while i < len(binary_number):
-                conversion += int(binary_number[len(binary_number)-i-1]) * 2 ** i
-                # print(len(binary_number)-i-1)
+            while i < len(binary_number): # Iterate through each char of the inputted number
+                conversion += int(binary_number[len(binary_number)-i-1]) * 2 ** i # And multiply by 2 to the power of i
                 i += 1
             
             print(conversion)
-            break
+            break # Break out of input validation
 
+# Decimal to Binary Conversion
+# TODO: Add input validation
 def dec2bin():
         
     decimal_number = input("Please enter a decimal number:\n")
@@ -54,12 +59,12 @@ def dec2bin():
     decimal_number = int(decimal_number)
 
     while decimal_number != 0:
-        conversion = str(decimal_number % 2) + conversion
-        decimal_number = int(decimal_number / 2)
+        conversion = str(decimal_number % 2) + conversion # Store remainder of 1 or 0 to the binary string in reverse order
+        decimal_number = int(decimal_number / 2) # Make decimal_number equal to itself divided by 2
 
     print(conversion)
 
-
+# Hexadecimal to Decimal Conversion
 def hex2dec():
     
     hex_number = input("Please enter a hexadecimal number:\n")
@@ -67,20 +72,18 @@ def hex2dec():
     i = 0
 
     while i < len(hex_number):
-        hex_string_indexed = len(hex_number)-i-1
+        hex_string_indexed = len(hex_number)-i-1 # Create a number to use as an index for easier reference
 
-        if any(j in hex_number[hex_string_indexed] for j in ("A", "B", "C", "D", "E", "F")):
-            conversion += int(hex_key_list[hex_value_list.index(hex_number[len(hex_number)-i-1])]) * 16 ** i
-            # print("Letter detected", hex_number[len(hex_number)-i-1])
+        if any(j in hex_number[hex_string_indexed] for j in ("A", "B", "C", "D", "E", "F")): # Check if A-F is equal to the currently indexed character
+            conversion += int(hex_key_list[hex_value_list.index(hex_number[len(hex_number)-i-1])]) * 16 ** i # Multiply the value by 16 to the power of i
         else:
-            # print("Number detected", hex_number[len(hex_number)-i-1])
             conversion += int(hex_number[len(hex_number)-i-1]) * 16 ** i
 
         i += 1
     
     print(conversion)
         
-
+# Decimal to Hexadecimal Conversion
 def dec2hex():
 
     decimal_number = input("Please enter a decimal number:\n")
@@ -89,9 +92,8 @@ def dec2hex():
     decimal_number = int(decimal_number)
 
     while decimal_number != 0:
-
-        conversion = hex_list[str(decimal_number % 16)] + conversion
-        decimal_number = int(decimal_number/16)
+        conversion = hex_list[str(decimal_number % 16)] + conversion # Add to conversion: the remainder of the decimal number divided by 16
+        decimal_number = int(decimal_number/16) # Set the decimal number equal to itself divided by 16
 
     print(conversion)
 
