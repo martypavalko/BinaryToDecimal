@@ -1,10 +1,42 @@
-# Take input as 1's and 0's only
-# Iterate through each digit starting from the right-most digit
-# Multiply that indexed digit by 2 to the power of the index
-# Add all of the products of multipication together for the conversion
+#! /usr/bin/python3
 
-from pickletools import decimalnl_long
+hex_values = {
+    "1" : "1",
+    "2" : "2",
+    "3" : "3",
+    "4" : "4",
+    "5" : "5",
+    "6" : "6",
+    "7" : "7",
+    "8" : "8",
+    "9" : "9",
+    "10" : "A",
+    "11" : "B",
+    "12" : "C",
+    "13" : "D",
+    "14" : "E",
+    "15" : "F",
+    "0" : "0"
+}
 
+reverse_hex_values = {
+    "1" : "1",
+    "2" : "2",
+    "3" : "3",
+    "4" : "4",
+    "5" : "5",
+    "6" : "6",
+    "7" : "7",
+    "8" : "8",
+    "9" : "9",
+    "A": "10",
+    "B" : "11",
+    "C" : "12",
+    "D" : "13",
+    "E" : "14",
+    "F" : "15",
+    "0" : "0"
+}
 
 def bin2dec():
 
@@ -37,28 +69,30 @@ def dec2bin():
         decimal_number = int(decimal_number / 2)
 
     print(conversion)
+
+
+def hex2dec():
+    
+    hex_number = input("Please enter a hexadecimal number:\n")
+    conversion = 0
+    i = 0
+
+    while i < len(hex_number):
+        hex_string_indexed = len(hex_number)-i-1
+
+        if any(j in hex_number[hex_string_indexed] for j in ("A", "B", "C", "D", "E", "F")):
+            conversion += int(reverse_hex_values[hex_number[len(hex_number)-i-1]]) * 16 ** i
+            # print("Letter detected", hex_number[len(hex_number)-i-1])
+        else:
+            # print("Number detected", hex_number[len(hex_number)-i-1])
+            conversion += int(hex_number[len(hex_number)-i-1]) * 16 ** i
+
+        i += 1
+    
+    print(conversion)
         
 
 def dec2hex():
-
-    hex_values = {
-        "1" : "1",
-        "2" : "2",
-        "3" : "3",
-        "4" : "4",
-        "5" : "5",
-        "6" : "6",
-        "7" : "7",
-        "8" : "8",
-        "9" : "9",
-        "10" : "A",
-        "11" : "B",
-        "12" : "C",
-        "13" : "D",
-        "14" : "E",
-        "15" : "F",
-        "0" : "0"
-    }
 
     decimal_number = input("Please enter a decimal number:\n")
 
@@ -73,4 +107,4 @@ def dec2hex():
     print(conversion)
 
 
-dec2hex()
+hex2dec()
